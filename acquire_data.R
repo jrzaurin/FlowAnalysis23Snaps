@@ -1,5 +1,5 @@
 ##==========================
-## import data from Mix Panel
+##import data from Mix Panel
 ##==========================
 
 dir <- "/Users/javier/Working/23snaps/MixPanel/FlowsAndSequences/20150501-20151201"
