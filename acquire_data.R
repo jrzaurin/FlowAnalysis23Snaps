@@ -1,5 +1,5 @@
 ##==========================
-##import data from Mix Panel
+## import data from Mix Panel
 ##==========================
 
 dir <- "/Users/javier/Working/23snaps/MixPanel/FlowsAndSequences/20150501-20151201"
@@ -85,32 +85,32 @@ mixpanelNew <- function (key,secret,events,lname) {
 
     alleventsList <- list()
 
-    expire <- as.integer(as.numeric(as.POSIXlt(Sys.time()))) + 36000 
-    
+    expire <- as.integer(as.numeric(as.POSIXlt(Sys.time()))) + 36000
+
     for (i in 1:length(events)){
-        
-        
+
+
         event <- events[i]
         event <- paste('["',event,'"]',sep="",collapse=NULL)
-        
+
         from_date <- "2015-01-05"
         to_date <- "2015-01-12"
-        
+
         ## Set the arguments
         args_sig <- paste('event=',event,"expire=",expire,"from_date=",from_date,
                           "to_date=",to_date,sep="",collapse=NULL)
-        
+
         args_url <- paste('event=',URLencode(event),"&expire=",expire,"&from_date=",from_date,
                           "&to_date=",to_date,sep="",collapse=NULL)
-        
+
         ## Create the hashed Signature
         sig <- paste("api_key=",key,args_sig,secret,sep="",collapse=NULL)
         hashed_sig <- digest(sig, algo="md5", serialize = FALSE)
-        
+
         ## Create the URL with the full authorization string
         url <- paste("http://data.mixpanel.com/api/2.0/export/?","api_key=",key,"&",
                      args_url,"&sig=",hashed_sig,sep="",collapse=NULL)
-        
+
         ## Connect to the Mixpanel API and save data
         eventList <- lapply(readLines(url), function(x) fromJSON(x))
         alleventsList <- append(alleventsList, eventList)
